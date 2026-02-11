@@ -34,23 +34,23 @@ function shuffle(array) {
  * @returns {Array<{verb: object, pronoun: string, correctAnswer: string}>}
  */
 export function generateExerciseQueue() {
-  const QUEUE_SIZE = 32;
+  const QUEUE_SIZE = 20;
   const queue = [];
   
-  // Create pronoun distribution: each pronoun appears at least 5 times
-  // 6 pronouns * 5 = 30, plus 2 random ones = 32
+  // Create pronoun distribution: each pronoun appears at least 3 times
+  // 6 pronouns * 3 = 18, plus 2 random ones = 20
   const pronounQueue = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 3; i++) {
     pronounQueue.push(...pronouns);
   }
-  // Add 2 more random pronouns to reach 32
+  // Add 2 more random pronouns to reach 20
   pronounQueue.push(pronouns[Math.floor(Math.random() * pronouns.length)]);
   pronounQueue.push(pronouns[Math.floor(Math.random() * pronouns.length)]);
   
   // Shuffle pronouns to randomize order
   const shuffledPronouns = shuffle(pronounQueue);
   
-  // Track verb usage to ensure no verb appears more than twice
+  // Track verb usage to ensure no verb appears more than once
   const verbUsageCount = new Map();
   verbs.forEach(v => verbUsageCount.set(v.infinitive, 0));
   
@@ -58,9 +58,9 @@ export function generateExerciseQueue() {
   for (let i = 0; i < QUEUE_SIZE; i++) {
     const pronoun = shuffledPronouns[i];
     
-    // Get available verbs (used less than 2 times)
+    // Get available verbs (not yet used)
     const availableVerbs = verbs.filter(
-      v => verbUsageCount.get(v.infinitive) < 2
+      v => verbUsageCount.get(v.infinitive) === 0
     );
     
     // Pick a random verb from available ones

@@ -73,9 +73,9 @@ describe('checkAnswer', () => {
 });
 
 describe('generateExerciseQueue', () => {
-  it('should generate exactly 32 exercises', () => {
+  it('should generate exactly 20 exercises', () => {
     const queue = generateExerciseQueue();
-    expect(queue).toHaveLength(32);
+    expect(queue).toHaveLength(20);
   });
 
   it('should have valid exercise structure', () => {
@@ -90,7 +90,7 @@ describe('generateExerciseQueue', () => {
     });
   });
 
-  it('should not have any verb appearing more than twice', () => {
+  it('should not have any verb appearing more than once', () => {
     const queue = generateExerciseQueue();
     const verbCounts = new Map();
     
@@ -100,11 +100,11 @@ describe('generateExerciseQueue', () => {
     });
 
     verbCounts.forEach((count, verb) => {
-      expect(count).toBeLessThanOrEqual(2);
+      expect(count).toBe(1);
     });
   });
 
-  it('should include all 6 pronouns at least 5 times each', () => {
+  it('should include all 6 pronouns at least 3 times each', () => {
     const queue = generateExerciseQueue();
     const pronounCounts = new Map();
     
@@ -114,7 +114,7 @@ describe('generateExerciseQueue', () => {
     });
 
     pronounCounts.forEach((count, pronoun) => {
-      expect(count).toBeGreaterThanOrEqual(5);
+      expect(count).toBeGreaterThanOrEqual(3);
     });
   });
 
