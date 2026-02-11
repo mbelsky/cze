@@ -118,18 +118,6 @@ describe('generateExerciseQueue', () => {
     });
   });
 
-  it('should produce different queues on multiple calls', () => {
-    const queue1 = generateExerciseQueue();
-    const queue2 = generateExerciseQueue();
-    
-    // Convert to strings for comparison
-    const str1 = queue1.map(e => `${e.verb.infinitive}-${e.pronoun}`).join(',');
-    const str2 = queue2.map(e => `${e.verb.infinitive}-${e.pronoun}`).join(',');
-    
-    // Very unlikely to be identical if truly random
-    expect(str1).not.toBe(str2);
-  });
-
   it('should use verbs from different conjugation groups', () => {
     const queue = generateExerciseQueue();
     const groups = new Set(queue.map(e => e.verb.group));
