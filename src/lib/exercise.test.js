@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { verbs, pronouns } from './verbs.js';
-import { generateExercise, checkAnswer } from './exercise.js';
+import { generateExercise, generateExerciseQueue, checkAnswer } from './exercise.js';
 
 describe('verbs data', () => {
   it('should have at least one verb per group', () => {
@@ -69,5 +69,60 @@ describe('checkAnswer', () => {
     expect(checkAnswer('dělám', 'děláš')).toBe(false);
     expect(checkAnswer('dělám', '')).toBe(false);
     expect(checkAnswer('dělám', 'wrong')).toBe(false);
+  });
+});
+
+describe('generateExerciseQueue', () => {
+  it('should generate exactly 20 exercises', () => {
+    const queue = generateExerciseQueue();
+    expect(queue).toHaveLength(20);
+  });
+
+  it('should have valid exercise structure', () => {
+    const queue = generateExerciseQueue();
+    queue.forEach(exercise => {
+      expect(exercise.verb).toBeDefined();
+      expect(exercise.pronoun).toBeDefined();
+      expect(exercise.correctAnswer).toBeDefined();
+      expect(pronouns).toContain(exercise.pronoun);
+      expect(verbs).toContain(exercise.verb);
+      expect(exercise.correctAnswer).toBe(exercise.verb.forms[exercise.pronoun]);
+    });
+  });
+
+  it('should not have any verb appearing more than once', () => {
+    const queue = generateExerciseQueue();
+    const verbCounts = new Map();
+    
+    queue.forEach(exercise => {
+      const infinitive = exercise.verb.infinitive;
+      verbCounts.set(infinitive, (verbCounts.get(infinitive) || 0) + 1);
+    });
+
+    verbCounts.forEach((count, verb) => {
+      expect(count).toBe(1);
+    });
+  });
+
+  it('should include all 6 pronouns at least 3 times each', () => {
+    const queue = generateExerciseQueue();
+    const pronounCounts = new Map();
+    
+    pronouns.forEach(p => pronounCounts.set(p, 0));
+    queue.forEach(exercise => {
+      pronounCounts.set(exercise.pronoun, pronounCounts.get(exercise.pronoun) + 1);
+    });
+
+    pronounCounts.forEach((count, pronoun) => {
+      expect(count).toBeGreaterThanOrEqual(3);
+    });
+  });
+
+  it('should use verbs from different conjugation groups', () => {
+    const queue = generateExerciseQueue();
+    const groups = new Set(queue.map(e => e.verb.group));
+    
+    // Should have exercises from multiple groups (we have 4 groups total)
+    expect(groups.size).toBeGreaterThan(1);
   });
 });
