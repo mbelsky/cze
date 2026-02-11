@@ -10,7 +10,7 @@
     "test": "vitest run"
   },
   "engines": {
-    "node": ">=24.0.0"
+    "node": "24.x"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.1",
