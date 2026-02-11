@@ -1,7 +1,9 @@
 <script>
-  import { generateExercise, checkAnswer } from './lib/exercise.js'
+  import { generateExerciseQueue, checkAnswer } from './lib/exercise.js'
 
-  let exercise = $state(generateExercise())
+  let exerciseQueue = $state(generateExerciseQueue())
+  let currentIndex = $state(0)
+  let exercise = $state(exerciseQueue[currentIndex])
   let userAnswer = $state('')
   let feedback = $state(null) // null | 'correct' | 'incorrect'
   let showCorrect = $state('')
@@ -18,7 +20,15 @@
   }
 
   function handleNext() {
-    exercise = generateExercise()
+    currentIndex++
+    
+    // If we've exhausted the queue, generate a new one
+    if (currentIndex >= exerciseQueue.length) {
+      exerciseQueue = generateExerciseQueue()
+      currentIndex = 0
+    }
+    
+    exercise = exerciseQueue[currentIndex]
     userAnswer = ''
     feedback = null
     showCorrect = ''
