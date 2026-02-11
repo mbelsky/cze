@@ -27,7 +27,7 @@
 
 <main>
   <h1>Czech Verb Practice</h1>
-  <p class="subtitle">Practise conjugating Czech verbs</p>
+  <p class="subtitle">Practice conjugating Czech verbs</p>
 
   <div class="card">
     <div class="group-badge">Group: {exercise.verb.group}</div>
