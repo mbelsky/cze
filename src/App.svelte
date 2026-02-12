@@ -88,14 +88,14 @@
   .card {
     background: #1e1e2e;
     border-radius: 12px;
-    padding: 1.5em;
+    padding: var(--spacing-md);
     max-width: 480px;
     margin: 0 auto;
   }
 
   @media (min-width: 768px) {
     .card {
-      padding: 2em;
+      padding: var(--spacing-lg);
     }
   }
 
@@ -111,13 +111,13 @@
 
   .exercise-label {
     display: block;
-    font-size: 1.25em;
+    font-size: var(--font-size-label-mobile);
     margin-bottom: 0.8em;
   }
 
   @media (min-width: 768px) {
     .exercise-label {
-      font-size: 1.5em;
+      font-size: var(--font-size-label-desktop);
     }
   }
 
@@ -147,7 +147,7 @@
   input {
     flex: 1;
     padding: 0.6em 0.8em;
-    font-size: 1em;
+    font-size: var(--font-size-input-mobile);
     border-radius: 8px;
     border: 2px solid #444;
     background: #181825;
@@ -167,7 +167,7 @@
 
   @media (min-width: 768px) {
     input {
-      font-size: 1.1em;
+      font-size: var(--font-size-input-desktop);
     }
   }
 
