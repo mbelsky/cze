@@ -1,4 +1,17 @@
 :root {
+  /* Spacing */
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+
+  /* Font sizes */
+  --font-size-h1-mobile: 1.75em;
+  --font-size-h1-desktop: 3.2em;
+  --font-size-label-mobile: 1.25em;
+  --font-size-label-desktop: 1.5em;
+  --font-size-input-mobile: 1em;
+  --font-size-input-desktop: 1.1em;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -31,8 +44,16 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: var(--font-size-h1-mobile);
   line-height: 1.1;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: var(--font-size-h1-desktop);
+  }
 }
 
 .card {
@@ -42,8 +63,14 @@ h1 {
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: var(--spacing-sm);
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  #app {
+    padding: var(--spacing-lg);
+  }
 }
 
 button {

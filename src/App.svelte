@@ -88,9 +88,15 @@
   .card {
     background: #1e1e2e;
     border-radius: 12px;
-    padding: 2em;
+    padding: var(--spacing-md);
     max-width: 480px;
     margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .card {
+      padding: var(--spacing-lg);
+    }
   }
 
   .group-badge {
@@ -105,8 +111,14 @@
 
   .exercise-label {
     display: block;
-    font-size: 1.5em;
+    font-size: var(--font-size-label-mobile);
     margin-bottom: 0.8em;
+  }
+
+  @media (min-width: 768px) {
+    .exercise-label {
+      font-size: var(--font-size-label-desktop);
+    }
   }
 
   .pronoun {
@@ -123,12 +135,19 @@
   .input-row {
     display: flex;
     gap: 0.5em;
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 480px) {
+    .input-row {
+      flex-wrap: nowrap;
+    }
   }
 
   input {
     flex: 1;
     padding: 0.6em 0.8em;
-    font-size: 1.1em;
+    font-size: var(--font-size-input-mobile);
     border-radius: 8px;
     border: 2px solid #444;
     background: #181825;
@@ -136,6 +155,20 @@
     font-family: inherit;
     outline: none;
     transition: border-color 0.2s;
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 480px) {
+    input {
+      width: auto;
+    }
+  }
+
+  @media (min-width: 768px) {
+    input {
+      font-size: var(--font-size-input-desktop);
+    }
   }
 
   input:focus {
