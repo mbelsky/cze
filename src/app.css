@@ -1,8 +1,4 @@
 :root {
-  /* Breakpoints */
-  --breakpoint-mobile: 480px;
-  --breakpoint-tablet: 768px;
-
   /* Spacing */
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
