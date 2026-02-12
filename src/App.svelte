@@ -191,7 +191,6 @@
     padding: 0.7em 1em;
     border-radius: 8px;
     font-size: 1.05em;
-    min-height: 2.8em;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s;
@@ -223,7 +222,6 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
-    min-height: 2.8em;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s;
