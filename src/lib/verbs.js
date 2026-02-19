@@ -3,7 +3,7 @@
  *
  * Each verb has:
  *  - infinitive: the base/infinitive form
- *  - group: conjugation class (-á, -í, -uje, -e)
+ *  - group: conjugation class (-á, -í, -uj, -e)
  *  - forms: conjugated forms keyed by pronoun
  *
  * Pronouns: já, ty, on/ona/ono, my, vy, oni/ony/ona
@@ -143,10 +143,10 @@ export const verbs = [
     },
   },
 
-  // ---- Group -uje ----
+  // ---- Group -uj ----
   {
     infinitive: 'pracovat',
-    group: '-uje',
+    group: '-uj',
     forms: {
       'já': 'pracuji',
       'ty': 'pracuješ',
@@ -158,7 +158,7 @@ export const verbs = [
   },
   {
     infinitive: 'studovat',
-    group: '-uje',
+    group: '-uj',
     forms: {
       'já': 'studuji',
       'ty': 'studuješ',
@@ -170,7 +170,7 @@ export const verbs = [
   },
   {
     infinitive: 'kupovat',
-    group: '-uje',
+    group: '-uj',
     forms: {
       'já': 'kupuji',
       'ty': 'kupuješ',
@@ -182,7 +182,7 @@ export const verbs = [
   },
   {
     infinitive: 'milovat',
-    group: '-uje',
+    group: '-uj',
     forms: {
       'já': 'miluji',
       'ty': 'miluješ',
@@ -194,7 +194,7 @@ export const verbs = [
   },
   {
     infinitive: 'potřebovat',
-    group: '-uje',
+    group: '-uj',
     forms: {
       'já': 'potřebuji',
       'ty': 'potřebuješ',

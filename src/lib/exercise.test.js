@@ -7,7 +7,7 @@ describe('verbs data', () => {
     const groups = [...new Set(verbs.map((v) => v.group))];
     expect(groups).toContain('-á');
     expect(groups).toContain('-í');
-    expect(groups).toContain('-uje');
+    expect(groups).toContain('-uj');
     expect(groups).toContain('-e');
   });
 
