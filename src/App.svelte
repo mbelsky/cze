@@ -127,13 +127,9 @@
   }
 
   /* Verb group colour coding — dark theme (default) */
-  /* -á group: red  (#f38ba8 on #1e1e2e ≈ 6.4:1) */
   .group-a  { color: #f38ba8; }
-  /* -í group: green  (#a6e3a1 on #1e1e2e ≈ 9.8:1) */
   .group-i  { color: #a6e3a1; }
-  /* -uj group: blue  (#89b4fa on #1e1e2e ≈ 7.0:1) */
   .group-uj { color: #89b4fa; }
-  /* -e group: yellow  (#f9e2af on #1e1e2e ≈ 11.4:1) */
   .group-e  { color: #f9e2af; }
 
   .input-row {
@@ -237,13 +233,9 @@
     }
 
     /* Verb group colour coding — light theme */
-    /* -á group: red  (#d20f39 on #eff1f5 ≈ 4.7:1) */
     .group-a  { color: #d20f39; }
-    /* -í group: green  (#166534 on #eff1f5 ≈ 6.3:1) */
     .group-i  { color: #166534; }
-    /* -uj group: blue  (#1d4ed8 on #eff1f5 ≈ 6.0:1) */
     .group-uj { color: #1d4ed8; }
-    /* -e group: amber  (#92400e on #eff1f5 ≈ 5.8:1) */
     .group-e  { color: #92400e; }
 
     .feedback.correct {
