@@ -1,6 +1,13 @@
 <script>
   import { generateExerciseQueue, checkAnswer } from './lib/exercise.js'
 
+  const groupColorClass = {
+    '-á': 'group-a',
+    '-í': 'group-i',
+    '-uj': 'group-uj',
+    '-e': 'group-e',
+  }
+
   let exerciseQueue = $state(generateExerciseQueue())
   let currentIndex = $state(0)
   let exercise = $state(exerciseQueue[currentIndex])
@@ -40,12 +47,10 @@
   <p class="subtitle">Practice conjugating Czech verbs</p>
 
   <div class="card">
-    <div class="group-badge">Group: {exercise.verb.group}</div>
-
     <form onsubmit={handleSubmit}>
       <label class="exercise-label" for="answer">
         <span class="pronoun">({exercise.pronoun})</span>
-        <span class="infinitive">{exercise.verb.infinitive}</span>
+        <span class="infinitive {groupColorClass[exercise.verb.group]}">{exercise.verb.infinitive}</span>
       </label>
 
       <div class="input-row">
@@ -99,16 +104,6 @@
     }
   }
 
-  .group-badge {
-    display: inline-block;
-    font-size: 0.85em;
-    padding: 0.2em 0.7em;
-    border-radius: 999px;
-    background: #313244;
-    color: #cdd6f4;
-    margin-bottom: 1.2em;
-  }
-
   .exercise-label {
     display: block;
     font-size: var(--font-size-label-mobile);
@@ -127,10 +122,15 @@
   }
 
   .infinitive {
-    color: #f9e2af;
     font-style: italic;
     margin-left: 0.3em;
   }
+
+  /* Verb group colour coding — dark theme (default) */
+  .group-a  { color: #f38ba8; }
+  .group-i  { color: #a6e3a1; }
+  .group-uj { color: #89b4fa; }
+  .group-e  { color: #f9e2af; }
 
   .input-row {
     display: flex;
@@ -218,11 +218,6 @@
       background: #eff1f5;
     }
 
-    .group-badge {
-      background: #dce0e8;
-      color: #4c4f69;
-    }
-
     input {
       background: #ffffff;
       border-color: #ccd0da;
@@ -237,9 +232,11 @@
       color: #1e66f5;
     }
 
-    .infinitive {
-      color: #df8e1d;
-    }
+    /* Verb group colour coding — light theme */
+    .group-a  { color: #d20f39; }
+    .group-i  { color: #166534; }
+    .group-uj { color: #1d4ed8; }
+    .group-e  { color: #92400e; }
 
     .feedback.correct {
       background: #e6f4ea;
