@@ -6,7 +6,7 @@
  *  - group: conjugation class (-á, -í, -uj, -e)
  *  - forms: conjugated forms keyed by pronoun
  *
- * Pronouns: já, ty, on/ona/ono, my, vy, oni/ony/ona
+ * Pronouns: já, ty, on/ona/ono, my, vy, oni
  */
 
 export const pronouns = [
@@ -15,7 +15,7 @@ export const pronouns = [
   'on/ona/ono',
   'my',
   'vy',
-  'oni/ony/ona',
+  'oni',
 ];
 
 export const verbs = [
@@ -29,7 +29,7 @@ export const verbs = [
       'on/ona/ono': 'dělá',
       'my': 'děláme',
       'vy': 'děláte',
-      'oni/ony/ona': 'dělají',
+      'oni': 'dělají',
     },
   },
   {
@@ -41,7 +41,7 @@ export const verbs = [
       'on/ona/ono': 'zná',
       'my': 'známe',
       'vy': 'znáte',
-      'oni/ony/ona': 'znají',
+      'oni': 'znají',
     },
   },
   {
@@ -53,7 +53,7 @@ export const verbs = [
       'on/ona/ono': 'volá',
       'my': 'voláme',
       'vy': 'voláte',
-      'oni/ony/ona': 'volají',
+      'oni': 'volají',
     },
   },
   {
@@ -65,7 +65,7 @@ export const verbs = [
       'on/ona/ono': 'čeká',
       'my': 'čekáme',
       'vy': 'čekáte',
-      'oni/ony/ona': 'čekají',
+      'oni': 'čekají',
     },
   },
   {
@@ -77,7 +77,7 @@ export const verbs = [
       'on/ona/ono': 'hledá',
       'my': 'hledáme',
       'vy': 'hledáte',
-      'oni/ony/ona': 'hledají',
+      'oni': 'hledají',
     },
   },
 
@@ -91,7 +91,7 @@ export const verbs = [
       'on/ona/ono': 'mluví',
       'my': 'mluvíme',
       'vy': 'mluvíte',
-      'oni/ony/ona': 'mluví',
+      'oni': 'mluví',
     },
   },
   {
@@ -103,7 +103,7 @@ export const verbs = [
       'on/ona/ono': 'rozumí',
       'my': 'rozumíme',
       'vy': 'rozumíte',
-      'oni/ony/ona': 'rozumějí',
+      'oni': 'rozumějí',
     },
   },
   {
@@ -115,7 +115,7 @@ export const verbs = [
       'on/ona/ono': 'vidí',
       'my': 'vidíme',
       'vy': 'vidíte',
-      'oni/ony/ona': 'vidí',
+      'oni': 'vidí',
     },
   },
   {
@@ -127,7 +127,7 @@ export const verbs = [
       'on/ona/ono': 'prosí',
       'my': 'prosíme',
       'vy': 'prosíte',
-      'oni/ony/ona': 'prosí',
+      'oni': 'prosí',
     },
   },
   {
@@ -139,7 +139,7 @@ export const verbs = [
       'on/ona/ono': 'myslí',
       'my': 'myslíme',
       'vy': 'myslíte',
-      'oni/ony/ona': 'myslí',
+      'oni': 'myslí',
     },
   },
 
@@ -153,7 +153,7 @@ export const verbs = [
       'on/ona/ono': 'pracuje',
       'my': 'pracujeme',
       'vy': 'pracujete',
-      'oni/ony/ona': 'pracují',
+      'oni': 'pracují',
     },
   },
   {
@@ -165,7 +165,7 @@ export const verbs = [
       'on/ona/ono': 'studuje',
       'my': 'studujeme',
       'vy': 'studujete',
-      'oni/ony/ona': 'studují',
+      'oni': 'studují',
     },
   },
   {
@@ -177,7 +177,7 @@ export const verbs = [
       'on/ona/ono': 'kupuje',
       'my': 'kupujeme',
       'vy': 'kupujete',
-      'oni/ony/ona': 'kupují',
+      'oni': 'kupují',
     },
   },
   {
@@ -189,7 +189,7 @@ export const verbs = [
       'on/ona/ono': 'miluje',
       'my': 'milujeme',
       'vy': 'milujete',
-      'oni/ony/ona': 'milují',
+      'oni': 'milují',
     },
   },
   {
@@ -201,7 +201,7 @@ export const verbs = [
       'on/ona/ono': 'potřebuje',
       'my': 'potřebujeme',
       'vy': 'potřebujete',
-      'oni/ony/ona': 'potřebují',
+      'oni': 'potřebují',
     },
   },
 
@@ -215,7 +215,7 @@ export const verbs = [
       'on/ona/ono': 'píše',
       'my': 'píšeme',
       'vy': 'píšete',
-      'oni/ony/ona': 'píšou',
+      'oni': 'píšou',
     },
   },
   {
@@ -227,7 +227,7 @@ export const verbs = [
       'on/ona/ono': 'čte',
       'my': 'čteme',
       'vy': 'čtete',
-      'oni/ony/ona': 'čtou',
+      'oni': 'čtou',
     },
   },
   {
@@ -239,7 +239,7 @@ export const verbs = [
       'on/ona/ono': 'bere',
       'my': 'bereme',
       'vy': 'berete',
-      'oni/ony/ona': 'berou',
+      'oni': 'berou',
     },
   },
   {
@@ -251,7 +251,7 @@ export const verbs = [
       'on/ona/ono': 'nese',
       'my': 'neseme',
       'vy': 'nesete',
-      'oni/ony/ona': 'nesou',
+      'oni': 'nesou',
     },
   },
   {
@@ -263,7 +263,7 @@ export const verbs = [
       'on/ona/ono': 'žije',
       'my': 'žijeme',
       'vy': 'žijete',
-      'oni/ony/ona': 'žijou',
+      'oni': 'žijou',
     },
   },
 ];
