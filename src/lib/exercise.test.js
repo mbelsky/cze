@@ -125,4 +125,14 @@ describe('generateExerciseQueue', () => {
     // Should have exercises from multiple groups (we have 4 groups total)
     expect(groups.size).toBeGreaterThan(1);
   });
+
+  it('should never have two consecutive exercises from the same conjugation group', () => {
+    // Run multiple times to account for randomness
+    for (let run = 0; run < 20; run++) {
+      const queue = generateExerciseQueue();
+      for (let i = 1; i < queue.length; i++) {
+        expect(queue[i].verb.group).not.toBe(queue[i - 1].verb.group);
+      }
+    }
+  });
 });

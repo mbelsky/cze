@@ -27,16 +27,17 @@ function shuffle(array) {
 }
 
 /**
- * Generate a queue of 32 exercises with the following guarantees:
- * 1. No verb appears more than twice in the batch
- * 2. All 6 pronouns are evenly distributed (each appears at least 5 times)
- * 
+ * Generate a queue of 20 exercises with the following guarantees:
+ * 1. No verb appears more than once in the batch
+ * 2. All 6 pronouns are evenly distributed (each appears at least 3 times)
+ * 3. No two consecutive exercises use verbs from the same conjugation group
+ *
  * @returns {Array<{verb: object, pronoun: string, correctAnswer: string}>}
  */
 export function generateExerciseQueue() {
   const QUEUE_SIZE = 20;
   const queue = [];
-  
+
   // Create pronoun distribution: each pronoun appears at least 3 times
   // 6 pronouns * 3 = 18, plus 2 random ones = 20
   const pronounQueue = [];
@@ -46,34 +47,41 @@ export function generateExerciseQueue() {
   // Add 2 more random pronouns to reach 20
   pronounQueue.push(pronouns[Math.floor(Math.random() * pronouns.length)]);
   pronounQueue.push(pronouns[Math.floor(Math.random() * pronouns.length)]);
-  
+
   // Shuffle pronouns to randomize order
   const shuffledPronouns = shuffle(pronounQueue);
-  
-  // Track verb usage to ensure no verb appears more than once
-  const verbUsageCount = new Map();
-  verbs.forEach(v => verbUsageCount.set(v.infinitive, 0));
-  
-  // Generate exercises
-  for (let i = 0; i < QUEUE_SIZE; i++) {
+
+  // Group verbs by conjugation group, shuffle within each group,
+  // then shuffle the group order itself for variety
+  const verbsByGroup = new Map();
+  verbs.forEach(v => {
+    if (!verbsByGroup.has(v.group)) {
+      verbsByGroup.set(v.group, []);
+    }
+    verbsByGroup.get(v.group).push(v);
+  });
+  const shuffledGroups = shuffle([...verbsByGroup.values()].map(group => shuffle(group)));
+
+  // Interleave groups in round-robin so no two consecutive verbs share a group
+  const interleavedVerbs = [];
+  const maxGroupSize = Math.max(...shuffledGroups.map(g => g.length));
+  for (let i = 0; i < maxGroupSize; i++) {
+    for (const group of shuffledGroups) {
+      if (i < group.length) {
+        interleavedVerbs.push(group[i]);
+      }
+    }
+  }
+
+  // Generate exercises (limit to available verbs if fewer than QUEUE_SIZE)
+  const exerciseCount = Math.min(QUEUE_SIZE, interleavedVerbs.length);
+  for (let i = 0; i < exerciseCount; i++) {
+    const verb = interleavedVerbs[i];
     const pronoun = shuffledPronouns[i];
-    
-    // Get available verbs (not yet used)
-    const availableVerbs = verbs.filter(
-      v => verbUsageCount.get(v.infinitive) === 0
-    );
-    
-    // Pick a random verb from available ones
-    const verb = availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
-    
-    // Increment usage count
-    verbUsageCount.set(verb.infinitive, verbUsageCount.get(verb.infinitive) + 1);
-    
-    // Create exercise
     const correctAnswer = verb.forms[pronoun];
     queue.push({ verb, pronoun, correctAnswer });
   }
-  
+
   return queue;
 }
 
