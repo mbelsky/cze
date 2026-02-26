@@ -62,24 +62,26 @@
           autocomplete="off"
           disabled={feedback !== null}
         />
-        {#if feedback === null}
-          <button type="submit" disabled={userAnswer.trim() === ''}>Check</button>
-        {/if}
+        <button 
+          type="submit" 
+          disabled={userAnswer.trim() === ''}
+          class:hidden={feedback !== null}
+        >
+          Check
+        </button>
       </div>
     </form>
 
-    {#if feedback === 'correct'}
-      <div class="feedback correct">✅ Correct!</div>
-    {/if}
-    {#if feedback === 'incorrect'}
-      <div class="feedback incorrect">
-        ❌ Incorrect — the correct answer is <strong>{showCorrect}</strong>
-      </div>
-    {/if}
+    <div class="feedback correct" class:visible={feedback === 'correct'}>
+      ✅ Correct!
+    </div>
+    <div class="feedback incorrect" class:visible={feedback === 'incorrect'}>
+      ❌ Incorrect — the correct answer is <strong>{showCorrect}</strong>
+    </div>
 
-    {#if feedback !== null}
-      <button class="next-btn" onclick={handleNext}>Next exercise →</button>
-    {/if}
+    <button class="next-btn" onclick={handleNext} class:visible={feedback !== null}>
+      Next exercise →
+    </button>
   </div>
 </main>
 
@@ -179,11 +181,24 @@
     opacity: 0.6;
   }
 
+  button.hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   .feedback {
     margin-top: 1em;
     padding: 0.7em 1em;
     border-radius: 8px;
     font-size: 1.05em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .feedback.visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .feedback.correct {
@@ -207,6 +222,14 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .next-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .next-btn:hover {
