@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { verbs, pronouns } from './verbs.js';
+import verbsData from '../../public/verbs.json';
 import { generateExercise, generateExerciseQueue, checkAnswer } from './exercise.js';
+
+const { verbs, pronouns } = verbsData;
 
 describe('verbs data', () => {
   it('should have at least one verb per group', () => {
@@ -31,7 +33,7 @@ describe('verbs data', () => {
 
 describe('generateExercise', () => {
   it('should return an object with verb, pronoun, and correctAnswer', () => {
-    const exercise = generateExercise();
+    const exercise = generateExercise(verbs, pronouns);
     expect(exercise.verb).toBeDefined();
     expect(exercise.pronoun).toBeDefined();
     expect(exercise.correctAnswer).toBeDefined();
@@ -43,7 +45,7 @@ describe('generateExercise', () => {
   it('should produce varying exercises (not always the same)', () => {
     const results = new Set();
     for (let i = 0; i < 50; i++) {
-      const ex = generateExercise();
+      const ex = generateExercise(verbs, pronouns);
       results.add(`${ex.verb.infinitive}-${ex.pronoun}`);
     }
     expect(results.size).toBeGreaterThan(1);
@@ -74,12 +76,12 @@ describe('checkAnswer', () => {
 
 describe('generateExerciseQueue', () => {
   it('should generate exactly 20 exercises', () => {
-    const queue = generateExerciseQueue();
+    const queue = generateExerciseQueue(verbs, pronouns);
     expect(queue).toHaveLength(20);
   });
 
   it('should have valid exercise structure', () => {
-    const queue = generateExerciseQueue();
+    const queue = generateExerciseQueue(verbs, pronouns);
     queue.forEach(exercise => {
       expect(exercise.verb).toBeDefined();
       expect(exercise.pronoun).toBeDefined();
@@ -91,7 +93,7 @@ describe('generateExerciseQueue', () => {
   });
 
   it('should not have any verb appearing more than once', () => {
-    const queue = generateExerciseQueue();
+    const queue = generateExerciseQueue(verbs, pronouns);
     const verbCounts = new Map();
     
     queue.forEach(exercise => {
@@ -105,7 +107,7 @@ describe('generateExerciseQueue', () => {
   });
 
   it('should include all 6 pronouns at least 3 times each', () => {
-    const queue = generateExerciseQueue();
+    const queue = generateExerciseQueue(verbs, pronouns);
     const pronounCounts = new Map();
     
     pronouns.forEach(p => pronounCounts.set(p, 0));
@@ -119,7 +121,7 @@ describe('generateExerciseQueue', () => {
   });
 
   it('should use verbs from different conjugation groups', () => {
-    const queue = generateExerciseQueue();
+    const queue = generateExerciseQueue(verbs, pronouns);
     const groups = new Set(queue.map(e => e.verb.group));
     
     // Should have exercises from multiple groups (we have 4 groups total)
