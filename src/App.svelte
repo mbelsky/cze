@@ -1,6 +1,6 @@
 <script>
-  import { loadVerbs } from './lib/verbs.js'
-  import { generateExerciseQueue, checkAnswer } from './lib/exercise.js'
+  import { loadVerbs } from './lib/verbs.js';
+  import { generateExerciseQueue, checkAnswer } from './lib/exercise.js';
 
   const groupColorClass = {
     '-á': 'group-a',
@@ -17,12 +17,15 @@
   let userAnswer = $state('')
   let feedback = $state(null) // null | 'correct' | 'incorrect'
   let showCorrect = $state('')
+  let loadError = $state(null)
 
   loadVerbs().then(data => {
     verbs = data.verbs
     pronouns = data.pronouns
     exerciseQueue = generateExerciseQueue(verbs, pronouns)
     exercise = exerciseQueue[0]
+  }).catch(err => {
+    loadError = err.message
   })
 
   function handleSubmit(e) {
@@ -92,6 +95,8 @@
       <button class="next-btn" onclick={handleNext}>Next exercise →</button>
     {/if}
   </div>
+  {:else if loadError}
+  <p class="error">Failed to load verb data: {loadError}</p>
   {:else}
   <p class="loading">Loading verbs…</p>
   {/if}
@@ -106,6 +111,11 @@
 
   .loading {
     color: #888;
+    text-align: center;
+  }
+
+  .error {
+    color: #f38ba8;
     text-align: center;
   }
 
