@@ -10,6 +10,7 @@ A web application for practising Czech verb conjugation. Built with [Svelte](htt
 - Conjugation practice for all six pronoun forms
 - Instant answer validation with correct answer feedback
 - Clean, responsive UI with light/dark mode support
+- **Offline support** — practice without a network connection after your first visit
 
 ## Getting Started
 
@@ -26,6 +27,23 @@ npm run dev
 | `npm run build`   | Build for production     |
 | `npm run preview` | Preview production build |
 | `npm run test`    | Run tests                |
+
+## Offline Support
+
+The app uses a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) (PWA) to enable offline use.
+
+| Aspect | Behaviour |
+| --- | --- |
+| **First visit** | Must be online — app shell and verb dictionary are cached on first load. |
+| **What is cached** | App shell (HTML/JS/CSS) and the verb dictionary (`verbs.json`). |
+| **App updates** | The new service worker is installed in the background and applied on the next page reload. |
+| **Dictionary freshness** | Uses a *stale-while-revalidate* strategy: the cached dictionary is served immediately while a fresh copy is fetched in the background. A page reload picks up any dictionary changes. |
+| **Offline error** | If the dictionary is unavailable and not yet cached, a friendly message asks you to check your network connection. |
+
+### Deployment caveats
+
+- The service worker scope is `/cze/`, matching both the GitHub Pages URL (`https://mbelsky.github.io/cze/`) and the custom domain path (`https://mbelsky.com/cze`).
+- The verb dictionary URL pattern (`/cze/verbs.json`) must match the actual served path for runtime caching to work correctly.
 
 ## Deployment
 

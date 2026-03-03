@@ -24,8 +24,8 @@
     pronouns = data.pronouns
     exerciseQueue = generateExerciseQueue(verbs, pronouns)
     exercise = exerciseQueue[0]
-  }).catch(err => {
-    loadError = err.message
+  }).catch(() => {
+    loadError = 'Could not load the verb dictionary. Please check your network connection and try again.'
   })
 
   function handleSubmit(e) {
@@ -96,7 +96,7 @@
     {/if}
   </div>
   {:else if loadError}
-  <p class="error">Failed to load verb data: {loadError}</p>
+  <p class="error">{loadError}</p>
   {:else}
   <p class="loading">Loading verbs…</p>
   {/if}
