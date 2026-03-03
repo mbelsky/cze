@@ -1,5 +1,6 @@
 <script>
-  import { generateExerciseQueue, checkAnswer } from './lib/exercise.js'
+  import { loadVerbs } from './lib/verbs.js';
+  import { generateExerciseQueue, checkAnswer } from './lib/exercise.js';
 
   const groupColorClass = {
     '-á': 'group-a',
@@ -8,12 +9,24 @@
     '-e': 'group-e',
   }
 
-  let exerciseQueue = $state(generateExerciseQueue())
+  let verbs = $state(null)
+  let pronouns = $state(null)
+  let exerciseQueue = $state([])
   let currentIndex = $state(0)
-  let exercise = $state(exerciseQueue[currentIndex])
+  let exercise = $state(null)
   let userAnswer = $state('')
   let feedback = $state(null) // null | 'correct' | 'incorrect'
   let showCorrect = $state('')
+  let loadError = $state(null)
+
+  loadVerbs().then(data => {
+    verbs = data.verbs
+    pronouns = data.pronouns
+    exerciseQueue = generateExerciseQueue(verbs, pronouns)
+    exercise = exerciseQueue[0]
+  }).catch(err => {
+    loadError = err.message
+  })
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -31,7 +44,7 @@
     
     // If we've exhausted the queue, generate a new one
     if (currentIndex >= exerciseQueue.length) {
-      exerciseQueue = generateExerciseQueue()
+      exerciseQueue = generateExerciseQueue(verbs, pronouns)
       currentIndex = 0
     }
     
@@ -46,6 +59,7 @@
   <h1>Czech Verb Practice</h1>
   <p class="subtitle">Practice conjugating Czech verbs</p>
 
+  {#if exercise}
   <div class="card">
     <form onsubmit={handleSubmit}>
       <label class="exercise-label" for="answer">
@@ -81,6 +95,11 @@
       <button class="next-btn" onclick={handleNext}>Next exercise →</button>
     {/if}
   </div>
+  {:else if loadError}
+  <p class="error">Failed to load verb data: {loadError}</p>
+  {:else}
+  <p class="loading">Loading verbs…</p>
+  {/if}
 </main>
 
 <style>
@@ -88,6 +107,16 @@
     color: #888;
     margin-top: -0.5em;
     margin-bottom: 1.5em;
+  }
+
+  .loading {
+    color: #888;
+    text-align: center;
+  }
+
+  .error {
+    color: #f38ba8;
+    text-align: center;
   }
 
   .card {

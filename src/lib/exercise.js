@@ -1,10 +1,10 @@
-import { verbs, pronouns } from './verbs.js';
-
 /**
  * Generate a random exercise by picking a random verb and pronoun.
+ * @param {Array} verbs - Array of verb objects
+ * @param {Array<string>} pronouns - Array of pronoun strings
  * @returns {{ verb: object, pronoun: string, correctAnswer: string }}
  */
-export function generateExercise() {
+export function generateExercise(verbs, pronouns) {
   const verb = verbs[Math.floor(Math.random() * verbs.length)];
   const pronoun = pronouns[Math.floor(Math.random() * pronouns.length)];
   const correctAnswer = verb.forms[pronoun];
@@ -31,9 +31,11 @@ function shuffle(array) {
  * 1. No verb appears more than twice in the batch
  * 2. All 6 pronouns are evenly distributed (each appears at least 5 times)
  * 
+ * @param {Array} verbs - Array of verb objects
+ * @param {Array<string>} pronouns - Array of pronoun strings
  * @returns {Array<{verb: object, pronoun: string, correctAnswer: string}>}
  */
-export function generateExerciseQueue() {
+export function generateExerciseQueue(verbs, pronouns) {
   const QUEUE_SIZE = 20;
   const queue = [];
   
