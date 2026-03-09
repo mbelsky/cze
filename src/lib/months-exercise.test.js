@@ -3,6 +3,7 @@ import { months } from "./months.js";
 import {
   generateMonthsExerciseQueue,
   checkMonthsAnswer,
+  DAYS_IN_MONTH,
 } from "./months-exercise.js";
 
 describe("generateMonthsExerciseQueue", () => {
@@ -92,6 +93,18 @@ describe("generateMonthsExerciseQueue", () => {
           expect(optionWord).not.toBe(correctWord);
           expect(optionWord.startsWith(stem)).toBe(true);
         });
+      });
+  });
+
+  it("typed-date tasks use a day within the valid range for each month", () => {
+    const queue = generateMonthsExerciseQueue();
+
+    queue
+      .filter((task) => task.type === "typed-date")
+      .forEach((task) => {
+        const maxDay = DAYS_IN_MONTH[task.month.english];
+        expect(task.day).toBeGreaterThanOrEqual(1);
+        expect(task.day).toBeLessThanOrEqual(maxDay);
       });
   });
 });
