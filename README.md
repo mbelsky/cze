@@ -8,6 +8,8 @@ A web application for practising Czech verb conjugation. Built with [Svelte](htt
 
 - Random verb exercises covering all four Czech conjugation groups
 - Conjugation practice for all six pronoun forms
+- Months mode at `#/months` with a full 12-month learning queue
+- Three months exercise types: nominative MCQ, `v + locative` MCQ, and typed date form (`ordinal + genitive`)
 - Instant answer validation with correct answer feedback
 - Clean, responsive UI with light/dark mode support
 - **Offline support** — practice without a network connection after your first visit
@@ -32,13 +34,13 @@ npm run dev
 
 The app uses a [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) (PWA) to enable offline use.
 
-| Aspect | Behaviour |
-| --- | --- |
-| **First visit** | Must be online — app shell and verb dictionary are cached on first load. |
-| **What is cached** | App shell (HTML/JS/CSS) and the verb dictionary (`verbs.json`). |
-| **App updates** | The new service worker is installed in the background and applied on the next page reload. |
-| **Dictionary freshness** | Uses a *stale-while-revalidate* strategy: the cached dictionary is served immediately while a fresh copy is fetched in the background. A page reload picks up any dictionary changes. |
-| **Offline error** | If the dictionary is unavailable and not yet cached, a friendly message asks you to check your network connection. |
+| Aspect                   | Behaviour                                                                                                                                                                             |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **First visit**          | Must be online — app shell and verb dictionary are cached on first load.                                                                                                              |
+| **What is cached**       | App shell (HTML/JS/CSS) and the verb dictionary (`verbs.json`).                                                                                                                       |
+| **App updates**          | The new service worker is installed in the background and applied on the next page reload.                                                                                            |
+| **Dictionary freshness** | Uses a _stale-while-revalidate_ strategy: the cached dictionary is served immediately while a fresh copy is fetched in the background. A page reload picks up any dictionary changes. |
+| **Offline error**        | If the dictionary is unavailable and not yet cached, a friendly message asks you to check your network connection.                                                                    |
 
 ### Deployment caveats
 

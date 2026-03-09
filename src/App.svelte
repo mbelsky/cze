@@ -1,289 +1,88 @@
 <script>
-  import { loadVerbs } from './lib/verbs.js';
-  import { generateExerciseQueue, checkAnswer } from './lib/exercise.js';
+  import VerbsPractice from './routes/VerbsPractice.svelte';
+  import MonthsPractice from './routes/MonthsPractice.svelte';
+  import {
+    MODE_VERBS,
+    MODE_MONTHS,
+    resolveModeFromHash,
+    hashForMode,
+  } from './lib/practice-modes.js';
 
-  const groupColorClass = {
-    '-á': 'group-a',
-    '-í': 'group-i',
-    '-uj': 'group-uj',
-    '-e': 'group-e',
+  let mode = $state(resolveModeFromHash(typeof window === 'undefined' ? '' : window.location.hash))
+  const modeOrder = [MODE_VERBS, MODE_MONTHS]
+  const modeLabelByMode = {
+    [MODE_VERBS]: 'Verbs',
+    [MODE_MONTHS]: 'Months',
+  }
+  const routeComponentByMode = {
+    [MODE_VERBS]: VerbsPractice,
+    [MODE_MONTHS]: MonthsPractice,
+  }
+  let currentRouteComponent = $derived(routeComponentByMode[mode] ?? VerbsPractice)
+
+  function hrefForMode(nextMode) {
+    return `#${hashForMode(nextMode)}`
   }
 
-  let verbs = $state(null)
-  let pronouns = $state(null)
-  let exerciseQueue = $state([])
-  let currentIndex = $state(0)
-  let exercise = $state(null)
-  let userAnswer = $state('')
-  let feedback = $state(null) // null | 'correct' | 'incorrect'
-  let showCorrect = $state('')
-  let loadError = $state(null)
+  $effect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
 
-  loadVerbs().then(data => {
-    verbs = data.verbs
-    pronouns = data.pronouns
-    exerciseQueue = generateExerciseQueue(verbs, pronouns)
-    exercise = exerciseQueue[0]
-  }).catch(() => {
-    loadError = 'Could not load the verb dictionary. Please check your network connection and try again.'
+    const onHashChange = () => {
+      mode = resolveModeFromHash(window.location.hash)
+    }
+
+    window.addEventListener('hashchange', onHashChange)
+    onHashChange()
+    return () => {
+      window.removeEventListener('hashchange', onHashChange)
+    }
   })
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    if (checkAnswer(exercise.correctAnswer, userAnswer)) {
-      feedback = 'correct'
-      showCorrect = ''
-    } else {
-      feedback = 'incorrect'
-      showCorrect = exercise.correctAnswer
-    }
-  }
-
-  function handleNext() {
-    currentIndex++
-    
-    // If we've exhausted the queue, generate a new one
-    if (currentIndex >= exerciseQueue.length) {
-      exerciseQueue = generateExerciseQueue(verbs, pronouns)
-      currentIndex = 0
-    }
-    
-    exercise = exerciseQueue[currentIndex]
-    userAnswer = ''
-    feedback = null
-    showCorrect = ''
-  }
 </script>
 
 <main>
-  <h1>Czech Verb Practice</h1>
-  <p class="subtitle">Practice conjugating Czech verbs</p>
+  <nav class="mode-switch" aria-label="Practice mode">
+    {#each modeOrder as navMode}
+      <a
+        href={hrefForMode(navMode)}
+        aria-current={mode === navMode ? 'page' : undefined}
+        class:active={mode === navMode}
+        onclick={() => mode = navMode}
+      >
+        {modeLabelByMode[navMode]}
+      </a>
+    {/each}
+  </nav>
 
-  {#if exercise}
-  <div class="card">
-    <form onsubmit={handleSubmit}>
-      <label class="exercise-label" for="answer">
-        <span class="pronoun">({exercise.pronoun})</span>
-        <span class="infinitive {groupColorClass[exercise.verb.group]}">{exercise.verb.infinitive}</span>
-      </label>
-
-      <div class="input-row">
-        <input
-          id="answer"
-          type="text"
-          bind:value={userAnswer}
-          placeholder="Type the correct form…"
-          autocomplete="off"
-          disabled={feedback !== null}
-        />
-        {#if feedback === null}
-          <button type="submit" disabled={userAnswer.trim() === ''}>Check</button>
-        {/if}
-      </div>
-    </form>
-
-    {#if feedback === 'correct'}
-      <div class="feedback correct">✅ Correct!</div>
-    {/if}
-    {#if feedback === 'incorrect'}
-      <div class="feedback incorrect">
-        ❌ Incorrect — the correct answer is <strong>{showCorrect}</strong>
-      </div>
-    {/if}
-
-    {#if feedback !== null}
-      <button class="next-btn" onclick={handleNext}>Next exercise →</button>
-    {/if}
-  </div>
-  {:else if loadError}
-  <p class="error">{loadError}</p>
-  {:else}
-  <p class="loading">Loading verbs…</p>
-  {/if}
+  <svelte:component this={currentRouteComponent} />
 </main>
 
 <style>
-  .subtitle {
-    color: #888;
-    margin-top: -0.5em;
-    margin-bottom: 1.5em;
+  .mode-switch {
+    display: inline-flex;
+    gap: 0.4em;
+    margin-bottom: 1em;
   }
 
-  .loading {
-    color: #888;
-    text-align: center;
-  }
-
-  .error {
-    color: #f38ba8;
-    text-align: center;
-  }
-
-  .card {
-    background: #1e1e2e;
-    border-radius: 12px;
-    padding: var(--spacing-md);
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  @media (min-width: 768px) {
-    .card {
-      padding: var(--spacing-lg);
-    }
-  }
-
-  .exercise-label {
-    display: block;
-    font-size: var(--font-size-label-mobile);
-    margin-bottom: 0.8em;
-  }
-
-  @media (min-width: 768px) {
-    .exercise-label {
-      font-size: var(--font-size-label-desktop);
-    }
-  }
-
-  .pronoun {
-    color: #89b4fa;
-    font-weight: 600;
-  }
-
-  .infinitive {
-    font-style: italic;
-    margin-left: 0.3em;
-  }
-
-  /* Verb group colour coding — dark theme (default) */
-  .group-a  { color: #f38ba8; }
-  .group-i  { color: #a6e3a1; }
-  .group-uj { color: #89b4fa; }
-  .group-e  { color: #f9e2af; }
-
-  .input-row {
-    display: flex;
-    gap: 0.5em;
-    flex-wrap: wrap;
-  }
-
-  @media (min-width: 480px) {
-    .input-row {
-      flex-wrap: nowrap;
-    }
-  }
-
-  input {
-    flex: 1;
-    padding: 0.6em 0.8em;
-    font-size: var(--font-size-input-mobile);
+  .mode-switch a {
+    display: inline-block;
+    padding: 0.45em 0.8em;
     border-radius: 8px;
-    border: 2px solid #444;
-    background: #181825;
-    color: #cdd6f4;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s;
-    min-width: 0;
-    width: 100%;
+    color: inherit;
+    text-decoration: none;
   }
 
-  @media (min-width: 480px) {
-    input {
-      width: auto;
-    }
-  }
-
-  @media (min-width: 768px) {
-    input {
-      font-size: var(--font-size-input-desktop);
-    }
-  }
-
-  input:focus {
-    border-color: #89b4fa;
-  }
-
-  input:disabled {
-    opacity: 0.6;
-  }
-
-  .feedback {
-    margin-top: 1em;
-    padding: 0.7em 1em;
-    border-radius: 8px;
-    font-size: 1.05em;
-  }
-
-  .feedback.correct {
-    background: #1e3a2f;
-    color: #a6e3a1;
-  }
-
-  .feedback.incorrect {
-    background: #3a1e1e;
-    color: #f38ba8;
-  }
-
-  .next-btn {
-    margin-top: 1em;
-    width: 100%;
-    padding: 0.7em;
-    font-size: 1em;
+  .mode-switch a.active {
     background: #89b4fa;
     color: #1e1e2e;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .next-btn:hover {
-    background: #74c7ec;
   }
 
   @media (prefers-color-scheme: light) {
-    .card {
-      background: #eff1f5;
-    }
-
-    input {
-      background: #ffffff;
-      border-color: #ccd0da;
-      color: #4c4f69;
-    }
-
-    input:focus {
-      border-color: #1e66f5;
-    }
-
-    .pronoun {
-      color: #1e66f5;
-    }
-
-    /* Verb group colour coding — light theme */
-    .group-a  { color: #d20f39; }
-    .group-i  { color: #166534; }
-    .group-uj { color: #1d4ed8; }
-    .group-e  { color: #92400e; }
-
-    .feedback.correct {
-      background: #e6f4ea;
-      color: #40a02b;
-    }
-
-    .feedback.incorrect {
-      background: #fce4e4;
-      color: #d20f39;
-    }
-
-    .next-btn {
+    .mode-switch a.active {
       background: #1e66f5;
       color: #ffffff;
-    }
-
-    .next-btn:hover {
-      background: #2a7bff;
     }
   }
 </style>
