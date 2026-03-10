@@ -114,88 +114,8 @@
 </section>
 
 <style>
-  .subtitle {
-    color: #888;
-    margin-top: -0.5em;
-    margin-bottom: 1.5em;
-  }
-
-  .card {
-    background: #1e1e2e;
-    border-radius: 12px;
-    padding: var(--spacing-md);
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  @media (min-width: 768px) {
-    .card {
-      padding: var(--spacing-lg);
-    }
-  }
-
-  .exercise-label {
-    display: block;
-    font-size: var(--font-size-label-mobile);
-    margin-bottom: 0.8em;
-  }
-
-  @media (min-width: 768px) {
-    .exercise-label {
-      font-size: var(--font-size-label-desktop);
-    }
-  }
-
   .prompt {
     font-weight: 600;
-  }
-
-  .input-row {
-    display: flex;
-    gap: 0.5em;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-
-  @media (min-width: 480px) {
-    .input-row {
-      flex-wrap: nowrap;
-    }
-  }
-
-  input {
-    flex: 1;
-    padding: 0.6em 0.8em;
-    font-size: var(--font-size-input-mobile);
-    border-radius: 8px;
-    border: 2px solid #444;
-    background: #181825;
-    color: #cdd6f4;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s;
-    min-width: 0;
-    width: 100%;
-  }
-
-  @media (min-width: 480px) {
-    input {
-      width: auto;
-    }
-  }
-
-  @media (min-width: 768px) {
-    input {
-      font-size: var(--font-size-input-desktop);
-    }
-  }
-
-  input:focus {
-    border-color: #89b4fa;
-  }
-
-  input:disabled {
-    opacity: 0.6;
   }
 
   .options {
@@ -225,78 +145,11 @@
     margin: 0;
   }
 
-  .feedback {
-    margin-top: 1em;
-    padding: 0.7em 1em;
-    border-radius: 8px;
-    font-size: 1.05em;
-  }
-
-  .feedback.correct {
-    background: #1e3a2f;
-    color: #a6e3a1;
-  }
-
-  .feedback.incorrect {
-    background: #3a1e1e;
-    color: #f38ba8;
-  }
-
-  .next-btn {
-    margin-top: 1em;
-    width: 100%;
-    padding: 0.7em;
-    font-size: 1em;
-    background: #89b4fa;
-    color: #1e1e2e;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .next-btn:hover {
-    background: #74c7ec;
-  }
-
   @media (prefers-color-scheme: light) {
-    .card {
-      background: #eff1f5;
-    }
-
-    input {
-      background: #ffffff;
-      border-color: #ccd0da;
-      color: #4c4f69;
-    }
-
-    input:focus {
-      border-color: #1e66f5;
-    }
-
-    .feedback.correct {
-      background: #e6f4ea;
-      color: #40a02b;
-    }
-
-    .feedback.incorrect {
-      background: #fce4e4;
-      color: #d20f39;
-    }
-
     .option-item {
       background: #ffffff;
       border-color: #ccd0da;
       color: #4c4f69;
-    }
-
-    .next-btn {
-      background: #1e66f5;
-      color: #ffffff;
-    }
-
-    .next-btn:hover {
-      background: #2a7bff;
     }
   }
 </style>
