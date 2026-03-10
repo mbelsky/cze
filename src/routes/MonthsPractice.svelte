@@ -61,7 +61,7 @@
   {#if exercise}
   <div class="card">
     <form onsubmit={handleSubmit}>
-      <label class="exercise-label" for="answer">
+      <label class="exercise-label" for={exercise.inputType !== 'mcq' ? 'answer' : undefined}>
         <span class="prompt">{exercise.prompt}</span>
       </label>
 
